@@ -8,7 +8,7 @@ MovieDatabase created using React Native and TMDB API. Native version of my othe
 
  <img src="Screenshot_20200727-210339808.jpg" width="270" height="560">    <img src="Screenshot_20200727-211543478.jpg" width="270" height="560">    <img src="Screenshot_20200727-211551754.jpg" width="270" height="560">
  
-MIT License
+## MIT License
 
 Copyright (c) 2020 Denny Sunny
 
