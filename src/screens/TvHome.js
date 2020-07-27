@@ -5,13 +5,13 @@ import {
     ScrollView,
     View,
     Text,
+    TouchableOpacity,
     StatusBar,
     Image,
     Button,
   } from 'react-native';
 import Constants from '../Constants'
 import { TMDB_KEY } from "../config";
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios'
 
 export default class TvHome extends React.Component{
@@ -20,7 +20,9 @@ export default class TvHome extends React.Component{
         super();
 
         this.state = {
-            tv: [],
+          hname : "popular",
+          tname : "popular",
+          tv: [],
         }
     }
 
@@ -28,9 +30,13 @@ export default class TvHome extends React.Component{
         this.getTv()
     }
 
+    componentDidUpdate () {
+      this.getTv()
+    }
+
     getTv = () => {
         axios.get(
-          `https://api.themoviedb.org/3/tv/popular?api_key=${TMDB_KEY}&language=en-US&page=1`
+          `https://api.themoviedb.org/3/tv/${this.state.tname}?api_key=${TMDB_KEY}&language=en-US&page=1`
         )
         .then(response => {
           const apiResponse = response.data;
@@ -44,18 +50,37 @@ export default class TvHome extends React.Component{
       };
 
     render() {
-        let pop = this.state.tv
         return(
-            <>
-            
+            <>           
             <ScrollView style={Styles.backg}>
             <Text style = {Styles.headerTitle} >Popular</Text>
             <Text style={Styles.title} >Shows</Text>
-              {pop.map((i) => (
+
+            <View style = {Styles.viewbtn}>
+
+              <Button style = {Styles.btn} title="Popular" color = "#212121"
+              onPress = { () => {this.setState({tname : "popular", hname : "popular"})  }} >
+              </Button>
+
+              <Button style = {Styles.btn} title="Running Now" color = "#212121"
+              onPress = { () => {this.setState({tname : "on_the_air", hname : "on air"})  }} >
+              </Button>
+
+              {/* <Button style = {Styles.btn} title="latest" color = "#212121" 
+              onPress = { () => {this.setState({tname : "latest", hname : "latest"})  }}>
+              </Button> */}
+
+              <Button style = {Styles.btn} title="Top Rated" color = "#212121" 
+              onPress = { () => {this.setState({tname : "top_rated", hname : "top rated"})  }}>
+              </Button>
+
+              </View>
+
+              {this.state.tv.map((i) => (
                 <View key={i.id} style={Styles.feedItem}>
                   <Text></Text>
                   <View >
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress = { () => this.props.navigation.navigate('TvDetails', {tid : i.id}) }  >
                     <Image
                         style={Styles.image}
                         source={{
@@ -99,65 +124,79 @@ export default class TvHome extends React.Component{
 }
 
 const Styles = StyleSheet.create({
-    image: { 
-      width: 120, 
-      height: 180,
-      marginLeft: 5, 
-      marginRight: 20, 
-      borderRadius:15 },
-  
-    title : {
-          fontSize : 44, 
-          paddingLeft:14, 
-          paddingTop:-40, 
-          fontWeight:"bold",
-          color:"#fafafa"
-      },
-  
-    rowView: {  
-      flexDirection: "row",
-      marginTop: 10,
-      
-      },
-  
-      txtcolor: {
-          color:"#fafafa"
-      },
-  
-    movieList: { 
-          marginLeft: 10,
-          marginRight: 10, 
-          backgroundColor: "white", 
-          elevation: 10 },
-  
-    backg : {
-        backgroundColor : "#000000"
-      },
-  
-    card: {
-      fontSize: 24, 
-      fontWeight : 'bold',
-      color: "#fafafa"
-    },
-  
-    headerTitle: {
-      fontSize: 60,
-      fontWeight: "bold",
-      padding: 8,
-      color:"#fafafa"
-      },
-  
-      feed: {
-          marginHorizontal: 16
-      },
-  
-      feedItem: {
-          backgroundColor: "#0f0f0f",
-          marginHorizontal: 16,
-          borderRadius: 15,
-          padding: 8,
-          flexDirection: "row",
-          marginVertical: 8,
-      },
-      })
+  image: {
+    width: 120,
+    height: 180,
+    marginLeft: 5,
+    marginRight: 20,
+    borderRadius: 15,
+  },
+
+  title: {
+    fontSize: 44,
+    paddingLeft: 14,
+    paddingTop: -40,
+    fontWeight: 'bold',
+    color: '#fafafa',
+  },
+
+  rowView: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+
+  txtcolor: {
+    color: '#fafafa',
+  },
+
+  movieList: {
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: 'white',
+    elevation: 10,
+  },
+
+  backg: {
+    backgroundColor: '#000000',
+  },
+
+  card: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fafafa',
+  },
+
+  headerTitle: {
+    fontSize: 60,
+    fontWeight: 'bold',
+    padding: 8,
+    color: '#fafafa',
+  },
+
+  feed: {
+    marginHorizontal: 16,
+  },
+
+  feedItem: {
+    backgroundColor: '#0f0f0f',
+    marginHorizontal: 16,
+    borderRadius: 15,
+    padding: 8,
+    flexDirection: 'row',
+    marginVertical: 8,
+  },
+  btn: {
+    backgroundColor: '#212121',
+    color: '#fafafa',
+    padding: 12,
+    borderBottomColor: '#737373',
+  },
+
+  viewbtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    display: 'flex',
+    padding: 8,
+  },
+});
   

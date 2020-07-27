@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
 import * as firebase from 'firebase';
+import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
 
 export default class LoginScreen extends React.Component{
 
@@ -25,11 +26,11 @@ export default class LoginScreen extends React.Component{
     render() {
         return(
             <View style={styles.in}>
-                <StatusBar barStyle="light-content"></StatusBar>
+                <StatusBar barStyle="light-content" backgroundColor = "#000000"></StatusBar>
                 <ImageBackground source={require('../images/login.jpg')} style={{height: "100%"}} >
                 <Text style={styles.greeting} >Hello. </Text>
                 <Text style={styles.welcome} >Welcome Back..!</Text>
-
+                <KeyboardAwareScrollView  enableOnAndroid={true}>
                 <View style={styles.errorMessage}>
                     {this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
                 </View>
@@ -53,13 +54,14 @@ export default class LoginScreen extends React.Component{
                 <TouchableOpacity style={styles.button} onPress={this.handleLogin} >
                     <Text style={{color: "#FFF", fontWeight:"600"}} >SIGN IN</Text>
                 </TouchableOpacity>
-
+                
                 <TouchableOpacity style={{alignSelf:"center", marginTop: 32}} 
                 onPress={()=>this.props.navigation.navigate("Register") } >
                     <Text style={{color: "#fafafa", fontSize: 14}}>
                         New to MovieDatabase ? <Text style={{color : "#b6ff7a", fontWeight:"600", fontWeight:"bold"}}>Sign Up</Text>
                     </Text>
                 </TouchableOpacity>
+                </KeyboardAwareScrollView>
             </ImageBackground>
             </View>
 
@@ -111,6 +113,7 @@ const styles = StyleSheet.create({
         borderBottomColor: "#ffffff",
         borderBottomWidth: StyleSheet.hairlineWidth,
         height: 40,
+        color: "#c5fac7",
         fontSize: 16,
         fontWeight: "bold"
     },

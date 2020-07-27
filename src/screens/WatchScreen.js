@@ -17,7 +17,7 @@ export default class HomeScreen extends React.Component{
         this.setState({email, displayName})
 
         const uid = (firebase.auth().currentUser || {}).uid
-        console.log(uid)
+        console.log("User id: ",uid)
 
         firebase.database().ref(`users/${uid}/favorite`).on('value', res => {
             const resMovies = res.val();

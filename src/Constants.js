@@ -3,6 +3,7 @@ module.exports = {
   URL: {
     BASE_URL: "https://api.themoviedb.org/3/",
     IMAGE_URL: "http://image.tmdb.org/t/p/w185",
+    BACK_DROP: "https://image.tmdb.org/t/p/w780",
     API_KEY: "api_key=d00da7ba34ab5e3dea935aedeb4d6cfb",
     SEARCH_QUERY: "search/movie?query=",
     PLACEHOLDER_IMAGE: "https://s3-ap-southeast-1.amazonaws.com/popcornsg/placeholder-movieimage.png"
@@ -12,6 +13,7 @@ module.exports = {
     SECONDARY_TITLE: "Movie Details",
     PLACEHOLDER: "Enter search text",
     SEARCH_BUTTON: "Search",
+    TAG: "Tagline",
     RELEASE_DATE: "Release Date: ",
     LANGUAGE: "Language: ",
     POPULARITY: "Popularity: ",

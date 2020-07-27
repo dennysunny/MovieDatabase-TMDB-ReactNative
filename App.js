@@ -6,14 +6,17 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import LoadingScreen from './src/screens/LoadingScreen'
 import HomeScreen from './src/screens/HomeScreen'
+import MovieScreen from './src/screens/MovieScreen'
 import LoginScreen from './src/screens/LoginScreen'
 import RegisterScreen from './src/screens/RegisterScreen'
 import WatchScreen from './src/screens/WatchScreen'
 import TvHome from './src/screens/TvHome'
+import TvScreen from './src/screens/TvScreen'
 import ProfileScreen from './src/screens/ProfileScreen'
 
 import * as firebase from 'firebase'
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 
 var firebaseConfig = {
@@ -37,7 +40,7 @@ const AppContainer = createStackNavigator(
         Home : {
           screen: HomeScreen,
           navigationOptions: {
-            tabBarIcon: ({tintColor}) => <Icon name="home" size={24} color={tintColor} />
+            tabBarIcon: ({tintColor}) => <Icon name="rocket" size={24} color={tintColor} />
           }
         },
         TV : {
@@ -97,15 +100,22 @@ const AppContainer = createStackNavigator(
 
 const AuthStack = createStackNavigator({
   Login : LoginScreen,
-  Register : RegisterScreen
+  Register : RegisterScreen,
 })
+
+// const DetailStack = createStackNavigator({
+//   MovieDetails : MovieScreen,
+//   TvDetails : TvScreen
+// })
 
 export default createAppContainer(
   createSwitchNavigator(
     {
       Loading : LoadingScreen,
       App : AppContainer,
-      Auth : AuthStack
+      Auth : AuthStack,
+      MovieDetails : MovieScreen,
+      TvDetails : TvScreen
     },
     {
       initialRouteName : "Loading"

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
 import * as firebase from 'firebase';
+import { SearchBar } from 'react-native-elements'
 
 export default class ProfileScreen extends React.Component{
 
@@ -31,6 +32,13 @@ export default class ProfileScreen extends React.Component{
                     <Text style={styles.userTitle} >{this.state.displayName}</Text>
                 </View>
             </ImageBackground>
+
+            <View>
+                <Text style={styles.headerTitle}>Hello,</Text> 
+                <SearchBar style= {styles.search} ref="searchBar" placeholder="Search">
+
+                </SearchBar>
+            </View>
 
                 <View>
                 <TouchableOpacity style={styles.button} onPress={this.signOutUser} >
@@ -84,6 +92,10 @@ const styles = StyleSheet.create({
         marginTop: 32,
         color: "#ffffff",
         fontWeight: "bold"
+    },
+    search : {
+        color : "#fafafa",
+        fontSize : 16,
     }
     });
     

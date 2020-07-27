@@ -6,10 +6,11 @@ import {
     Text,
     StatusBar,
     Image,
+    TouchableOpacity,
+    Button
   } from 'react-native';
 import Constants from '../Constants'
 import { TMDB_KEY } from "../config";
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios'
 
 
@@ -19,23 +20,29 @@ export default class HomeScreen extends React.Component{
         super();
 
         this.state = {
-            trending: [],
+          sname : "popular",
+          hname : "popular",
+          mdata: [],
         }
     }
 
-    componentDidMount() {
-        this.getTrending()
+    componentDidMount () {
+      this.getPopular()
     }
 
-    getTrending = () => {
+    componentDidUpdate() {
+        this.getPopular()
+    }
+
+    getPopular = () => {
         axios
           .get(
-            `https://api.themoviedb.org/3/trending/movie/day?api_key=${TMDB_KEY}`
+            `https://api.themoviedb.org/3/movie/${this.state.sname}?api_key=${TMDB_KEY}&language=en-US&page=1`
           )
           .then(response => {
             const apiResponse = response.data;
             this.setState({
-              trending: apiResponse.results
+              mdata: apiResponse.results
             });
              //console.log(apiResponse.results);
           })
@@ -45,19 +52,38 @@ export default class HomeScreen extends React.Component{
       };
 
     render() {
-        let pop = this.state.trending
         return(
             <>
-            
             <ScrollView style={Styles.backg} >       
             <StatusBar barStyle="light-content"  backgroundColor = "#000000"/>
-            <Text style = {Styles.headerTitle} >Trending</Text>
+            <Text style = {Styles.headerTitle} >{this.state.hname}</Text>
             <Text style={Styles.title} >Movies</Text>
-              {pop.map((i) => (
+
+            <View style = {Styles.viewbtn}>
+
+              <Button style = {Styles.btn} title="Popular" color = "#212121"
+              onPress = { () => {this.setState({sname : "popular", hname : "popular"})  }} >
+              </Button>
+
+              <Button style = {Styles.btn} title="Running Now" color = "#212121"
+              onPress = { () => {this.setState({sname : "now_playing", hname : "now playing"})  }} >
+              </Button>
+
+              <Button style = {Styles.btn} title="Upcoming" color = "#212121" 
+              onPress = { () => {this.setState({sname : "upcoming", hname : "upcoming"})  }}>
+              </Button>
+
+              <Button style = {Styles.btn} title="Top Rated" color = "#212121" 
+              onPress = { () => {this.setState({sname : "top_rated", hname : "top rated"})  }}>
+              </Button>
+
+            </View>
+
+              {this.state.mdata.map((i) => (
                 <View key={i.id} style={Styles.feedItem}>
                   <Text></Text>
                   <View >
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MovieDetails', {id : i.id})} >
                     <Image
                         style={Styles.image}
                         source={{
@@ -106,7 +132,7 @@ const Styles = StyleSheet.create({
     height: 180,
     marginLeft: 5,
     marginRight: 20,
-    borderRadius: 15,
+    borderRadius: 9,
   },
 
   title: {
@@ -148,6 +174,7 @@ const Styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 8,
     color: '#fafafa',
+    textTransform : "capitalize"
   },
 
   feed: {
@@ -157,11 +184,26 @@ const Styles = StyleSheet.create({
   feedItem: {
     backgroundColor: '#0f0f0f',
     marginHorizontal: 16,
-    borderRadius: 15,
+    borderRadius: 18,
     padding: 8,
     flexDirection: 'row',
     marginVertical: 8,
   },
+
+  btn : {
+    backgroundColor : "#212121",
+    color: '#fafafa',
+    padding : 12,
+    borderBottomColor: '#737373',
+  },
+
+  viewbtn : {
+    flexDirection : "row",
+    justifyContent : "space-evenly",
+    display : "flex",
+    padding : 8,
+  },
+
 });
 
     
