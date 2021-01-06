@@ -12,7 +12,7 @@
   "dependencies": {
     "@codler/react-native-keyboard-aware-scroll-view": "^1.0.1",
     "@react-native-community/masked-view": "^0.1.10",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "firebase": "7.9.0",
     "react": "16.13.1",
     "react-native": "0.63.1",
